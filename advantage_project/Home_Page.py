@@ -58,30 +58,34 @@ class Home_Page:
     def user_name(self):
         return self.driver.find_element(By.NAME, 'username')
 
+    #input user name
     def input_user_name(self, user_name: str):
         self.user_name().send_keys(user_name)
 
     def password(self):
         return self.driver.find_element(By.NAME, 'password')
-
+    #input password
     def input_password(self, password: str):
         self.password().send_keys(password)
 
     def sign_in(self):
         return self.driver.find_element(By.ID, 'sign_in_btnundefined')
 
+    #click sign in
     def click_sign_in(self):
         self.wait.until(EC.visibility_of_element_located((By.ID, 'sign_in_btnundefined'))).click()
 
     def create_new_account_button(self):
         return self.driver.find_element(By.CSS_SELECTOR, "[translate=CREATE_NEW_ACCOUNT]")
 
+    #click create new account
     def click_create_new_account(self):
         self.create_new_account_button().click()
 
     def cart_icon(self):
         return self.driver.find_element(By.CSS_SELECTOR, "[aria-label='ShoppingCart']")
 
+    #click on icon cart (this action take you to shopping cart page)
     def click_cart_icon(self):
         self.cart_icon().click()
 
@@ -100,12 +104,14 @@ class Home_Page:
     def search_icon(self):
         return self.driver.find_element(By.ID, 'menuSearch')
 
+    #clik on search icon
     def click_search_icon(self):
         self.search_icon().click()
 
     def search_line(self):
         return self.driver.find_element(By.ID, 'autoComplete')
 
+    #input value in search line
     def input_search_line(self, text: str):
         self.search_line().send_keys(text)
 

@@ -7,15 +7,17 @@ class ShoppingCard_Page:
     def __init__(self, driver: webdriver.chrome):
         self.driver = driver
 
+#return the "shopping cart" text in the page of shopping cart.
     def shopping_card_text(self):
         return self.driver.find_element(By.CSS_SELECTOR, "[class='select  ng-binding']").text
 
     def edit_product(self):
         return self.driver.find_elements(By.CSS_SELECTOR, "[class='edit ng-scope']")
 
-    def click_edit_product(self, num):
-        num -= 1
-        return self.driver.execute_script("arguments[0].click();", self.edit_product()[num])
+    #edit product, choose product that you want to edit (num_of_product) , from 1 = the first product - "user friendly"
+    def click_edit_product(self, num_of_product:int):
+        num_of_product -= 1
+        return self.driver.execute_script("arguments[0].click();", self.edit_product()[num_of_product])
 
     # QTY of the first product in the shopping cart page
     def qty_first_product_shipping_page(self):
@@ -54,6 +56,7 @@ class ShoppingCard_Page:
         name = self.driver.find_element(By.XPATH, f"//table/tbody/tr[{num_of_product}]/td[2]/label").text
         return name
 
+    #click on checkout
     def click_checkout(self):
         self.checkout = self.driver.find_element(By.ID, "checkOutButton").click()
 
