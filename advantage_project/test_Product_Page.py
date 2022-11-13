@@ -52,7 +52,7 @@ class TestProduct_Page(TestCase):
         # check if the qty is equal between the total item in icon cart to the sum of qty .
         self.assertEqual(self.home_page.total_products_icon_cart(), self.home_page.total_products_title())
 
-        # chek if the QTY is equal between the qty that we put to total item in icon cart.
+        # check if the QTY is equal between the qty that we put ,to total qty item in icon cart.
         qty1 = int(qty1)
         qty2 = int(qty2)
         self.assertEqual((qty2 + qty1), self.home_page.total_products_title())
@@ -99,7 +99,8 @@ class TestProduct_Page(TestCase):
         self.product_page.input_quantity(qty_product1)
         self.product_page.click_add_cart()
 
-        # get names from icon cart. if len > 27 then we take the 27 first letters
+        # get names from icon cart. if len > 27 then we take the 27 first letters.
+        # (Because in icon cart there are 27 first letters of the product)
         name_product_1_icon = self.home_page.name_product_icon_cart(1)
         if len(name_product_1_icon) > 27:
             name_product_1_icon = name_product_1_icon[:27]
@@ -112,14 +113,14 @@ class TestProduct_Page(TestCase):
         if len(name_product_3_icon) > 27:
             name_product_3_icon = name_product_3_icon[:27]
 
-        # test to name of product
+        # test to name of product. need to be equal between product page to icon cart
 
         self.assertEqual(name_product_1_icon, name_product_1)
         self.assertEqual(name_product_2_icon, name_product_2)
         self.assertEqual(name_product_3_icon, name_product3)
 
         self.home_page.hover_icon_cart()
-        # test to price
+        # test to price. need to be equal between product page to icon cart
         qty_product1 = int(qty_product1)
         qty_product2 = int(qty_product2)
         qty_product3 = int(qty_product3)
@@ -128,17 +129,17 @@ class TestProduct_Page(TestCase):
         self.assertEqual((price_product_2 * qty_product2), self.home_page.price_of_product_icon_cart(2))
         self.assertEqual((price_product3 * qty_product3), self.home_page.price_of_product_icon_cart(3))
 
-        # test to color:
+        # test to color. need to be equal between product page to icon cart
         self.assertEqual(color_product_1, self.home_page.color_product_icon_cart(1))
         self.assertEqual(color_product_2, self.home_page.color_product_icon_cart(2))
         self.assertEqual(color_product_3, self.home_page.color_product_icon_cart(3))
 
-        # test to qty:
+        # test to qty. need to be equal between product page to icon cart
         self.assertEqual(qty_product1, self.home_page.qty_of_product_icon_cart(1))
         self.assertEqual(qty_product2, self.home_page.qty_of_product_icon_cart(2))
         self.assertEqual(qty_product3, self.home_page.qty_of_product_icon_cart(3))
 
-    def test_3_remove_product_from_ucon_cart(self):
+    def test_3_remove_product_from_icon_cart(self):
         # add first product to cart
         self.home_page.click_speakers()
         self.category_page.choose_product(1)
@@ -160,6 +161,9 @@ class TestProduct_Page(TestCase):
         len_before_remove = self.home_page.len_list_products_at_icon_cart()
 
         # check if the product added according to his name .
+        #if len > 27 then we take the 27 first letters.
+        # (Because in icon cart there are 27 first letters of the product)
+
         product_name_icon_cart_1 = self.home_page.name_product_icon_cart(1)
         if len(product_name_icon_cart_1) > 27:
             product_name_icon_cart_1 = product_name_icon_cart_1[:27]
@@ -183,8 +187,9 @@ class TestProduct_Page(TestCase):
         self.category_page.choose_product(1)
         self.product_page.click_add_cart()
         self.home_page.hover_icon_cart()
+        #go to shopping cart page
         self.home_page.click_cart_icon()
-        # if have the text "SHOPPING CART", and the element -  that we in correctly page
+        # if have the text "SHOPPING CART", and the element -  that we in correctly page (shopping cart)
         self.assertEqual(self.shopping_cart_page.shopping_card_text(), "SHOPPING CART")
 
     def test_5_total_price_and_qty_true(self):
@@ -195,6 +200,7 @@ class TestProduct_Page(TestCase):
         price_product3 = self.product_page.price_product_float()
         self.product_page.input_quantity(qty_product3)
         self.product_page.click_add_cart()
+
         # add another product
         self.home_page.click_website_logo()
         self.home_page.click_speakers()
@@ -203,6 +209,7 @@ class TestProduct_Page(TestCase):
         price_product_2 = self.product_page.price_product_float()
         self.product_page.input_quantity(qty_product2)
         self.product_page.click_add_cart()
+
         # add the last product
         self.home_page.click_website_logo()
         self.home_page.click_mice()
@@ -211,6 +218,7 @@ class TestProduct_Page(TestCase):
         price_product1 = self.product_page.price_product_float()
         self.product_page.input_quantity(qty_product1)
         self.product_page.click_add_cart()
+
         # go to shopping cart page:
         self.home_page.click_cart_icon()
         # check that the qty we put in product page is equal to shopping cart page:
@@ -242,12 +250,14 @@ class TestProduct_Page(TestCase):
         self.category_page.choose_product(2)
         self.product_page.input_quantity('3')
         self.product_page.click_add_cart()
+
         # add another product
         self.home_page.click_website_logo()
         self.home_page.click_speakers()
         self.category_page.choose_product(1)
         self.product_page.input_quantity('2')
         self.product_page.click_add_cart()
+
         # go to shopping cart page
         self.home_page.hover_icon_cart()
         self.home_page.click_cart_icon()
@@ -292,136 +302,173 @@ class TestProduct_Page(TestCase):
         self.assertEqual(self.home_page.contact_us_text(), "CONTACT US")
 
     def test_8_orders_after_payment_safepay_registrtion(self):
-        pass
-
-
-    def test_9_(self):
-        # כניסה לעמוד הבית
+        # add prodoucts to cart
         self.home_page.click_mice()
-
-        # בחירת קטגוריה
         self.category_page.choose_product(1)
-
-        # בחירת כמות
         self.product_page.input_quantity('2')
-
-        # הוספה לסל
         self.product_page.click_add_cart()
-
-        # כניסה לסל
         self.home_page.click_cart_icon()
-
-        # מעבר לתשלום
         self.shopping_cart_page.click_checkout()
-
-        # מעבר לרישום
+        # create new user
         self.checkout_page.click_registration()
-
-        # בחירת שם משתמש
-        self.home_page.regist_un('Plvvlb55')
-
-        # בחירת סיסמא
-        self.home_page.regist_pass_word('Plvvlb55')
-
-        # אימות סיסמא
-        self.home_page.confirm_password('Plvvlb55')
-        # בחירת אימייל
+        self.home_page.regist_un('Pofffo91122')
+        self.home_page.regist_pass_word('Pofffo91322')
+        self.home_page.confirm_password('Pofffo91322')
         self.home_page.send_email('thekinsck@gmail.com')
-
-        # גלילה למטה בעמוד
         self.checkout_page.scroll()
-
-        # סימון כפתור הרדיו
         self.home_page.create_radio_bottun()
-
-        # sleep(5)
-
-        # לחיצה על יצירת חשבון
         self.home_page.click_create_action()
-
-        # sleep(10)
-
-        # לחיצה על אייקון המשתמש
+        # go to acount orders to save the no orders prove
         self.home_page.user_icon_after_log_in_TG()
-
-        # sleep(7)
-        # לחיצה על ההזמנות שלי
         self.checkout_page.user_my_orders_bottun_TG()
-
-        # לחיצה על החשבון שלי
         self.checkout_page.user_my_acount_bottun_TG()
-
-        # שומר את האורך של המשפט המעיד על זה שאין הזמנות כדי להשתמש בזה לבדיקה שאכן השתנה עמוד ההזמנות וכרגע יש הזמנות
         list_product_before = self.checkout_page.list_table_order()
-
-        # חוזר לסל הקניות
+        # go to cheackout,and pay with safepay
         self.home_page.click_cart_icon()
-
-        # עובר לתשלום
         self.checkout_page.click_cahekout_in_cart()
-
         self.checkout_page.click_next()
-
-        self.checkout_page.click_radio_creditcard()
-
-        self.checkout_page.cc_num()
-
-        self.checkout_page.send_cc('456778888777')
-        # sleep(7)
-        self.checkout_page.cc_CVVNUM()
-        # sleep(7)
-        self.checkout_page.send_cc_CVV('3454')
-        # sleep(7)
         self.checkout_page.scroll()
-
-        self.checkout_page.input_card_holder_name("gold tom ")
-        # sleep(7)
-
-        self.checkout_page.pay_masten_cccccc()
-
-        sleep(9)
-
+        self.checkout_page.safepay_username_send_k("gol5ff6")
+        self.checkout_page.safepay_password_send_k("'Took26'")
+        self.checkout_page.pay_now_btn_SAFEPAY()
+        # כנראה שיש בעיה שלא קשורה לקוד , יש סליפ למרות שיש גם וויט לייד הפקודות האלו
+        sleep(5)
         self.home_page.user_icon_after_log_in_TG()
+        # כנראה שיש בעיה שלא קשורה לקוד , יש סליפ למרות שיש גם וויט לייד הפקודות האלו
+        sleep(5)
 
-        # sleep(5)
-
-        # הולך למסך ההזמנות
+        # go to my orders page , take the prove of 1 order and compare with no orders
         self.checkout_page.user_my_orders_bottun_TG()
-
-        # sleep(5)
         self.assertNotEqual(self.checkout_page.no_orders_prove(), "- No orders -")
-
-        # הולך לסל הקניות
-        self.home_page.click_cart_icon()
-
+        # go to my cart , and prove the cart is empty
+        self.home_page.wait_cart_icon()
+        # כנראה שיש בעיה שלא קשורה לקוד , יש סליפ למרות שיש גם וויט לייד הפקודות האלו
         sleep(5)
-
-        # לוקח את הטקסט שאומר שהסל ריק ושומר אותו לצורך השוואה והוכה שהסל ריק
         self.checkout_page.empty_cart_prove_txt()
-
-        self.assertTrue(self.checkout_page.no_items_in_cart_prove(), "Your shopping cart is empty")
-
+        self.assertEqual(self.checkout_page.no_items_in_cart_prove(), "Your shopping cart is empty")
         self.home_page.click_website_logo()
-
-        sleep(5)
-
-        # לוחץ על אייקון המשתמש
+        # כנראה שיש בעיה שלא קשורה לקוד , יש סליפ למרות שיש גם וויט לייד הפקודות האלו
+        sleep(7)
+        # delate the acount
         self.home_page.user_icon_after_log_in_TG()
-
-        # הולך לעמוד החשבון שלי
         self.checkout_page.user_my_acount_bottun_TG()
-
-        # לוחץ על מחיקת משתמש
         self.checkout_page.delete_my_account_tg()
-
-        # מאשר מחיקת משתמש
         self.checkout_page.yes_delete_my_account_tg()
 
-    def test_10_check_logOut(self):
+
+    def test_9_pay_with_credit_cart_new_orders_empty_cart(self):
+        # add products to cart
+        self.home_page.click_mice()
+        self.category_page.choose_product(1)
+        self.product_page.input_quantity('2')
+        self.product_page.click_add_cart()
+        self.home_page.click_cart_icon()
+        self.shopping_cart_page.click_checkout()
+
+        # create a new account
+        self.checkout_page.click_registration()
+        self.home_page.regist_un('hfcccT331512')
+        self.home_page.regist_pass_word('hfcccT331512')
+        self.home_page.confirm_password('hfcccT331512')
+        self.home_page.send_email('thekinsck@gmail.com')
+        self.checkout_page.scroll()
+        self.home_page.create_radio_bottun()
+        self.home_page.click_create_action()
+
+        # going to my account , and edit payment deatils
+        self.home_page.user_icon_after_log_in_TG()
+        self.checkout_page.user_my_acount_bottun_TG()
+        self.home_page.acount_edit_details()
+        self.home_page.acount_edit_details_radio()
+        self.home_page.send_cc_keys('456778888777')
+        self.home_page.send_ccv_keys('455')
+        self.home_page.send_c_holder_keys('tgf gold')
+        self.home_page.send_mm()
+        self.home_page.send_yyyy()
+        self.home_page.save()
+
+        sleep(5)
+
+        # pay with credit card
+        self.home_page.click_cart_icon()
+        self.checkout_page.click_cahekout_in_cart()
+        self.checkout_page.click_next()
+        self.checkout_page.click_radio_creditcard()
+        self.home_page.pay_now_master()
+        sleep(3)
+
+        # going to my orders and take the seantnce _no orders_
+        self.home_page.user_icon_after_log_in_TG()
+        self.checkout_page.user_my_orders_bottun_TG()
+
+        # make sure that the - no orders - is no longer exsist
+        self.assertNotEqual(self.checkout_page.no_orders_prove(), "- No orders -")
+        self.home_page.click_website_logo()
+        self.home_page.click_cart_icon()
+
+        # take the "Your shopping cart is empty" from cart
+        self.checkout_page.empty_cart_prove_txt()
+
+        # cheack "Your shopping cart is empty" from cart is in the cart and true
+        self.assertTrue(self.checkout_page.no_items_in_cart_prove(), "Your shopping cart is empty")
+
+        # delate the acount
+        self.home_page.click_website_logo()
+        self.home_page.user_icon_after_log_in_TG()
+        self.checkout_page.user_my_acount_bottun_TG()
+        self.checkout_page.delete_my_account_tg()
+        self.checkout_page.yes_delete_my_account_tg()
+
+        # # //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        # self.home_page.click_mice()
+        # self.category_page.choose_product(1)
+        # self.product_page.input_quantity('2')
+        # self.product_page.click_add_cart()
+        # self.home_page.click_cart_icon()
+        # self.shopping_cart_page.click_checkout()
+        # self.home_page.click_user_logo()
+        # self.home_page.input_user_name('gold123')
+        # self.home_page.input_password('Gold123')
+        # self.home_page.click_sign_in()
+        # self.home_page.user_icon_after_log_in_TG()
+        # sleep(7)
+        # self.checkout_page.user_my_orders_bottun_TG()
+        # self.checkout_page.user_my_acount_bottun_TG()
+        # list_product_before = self.checkout_page.list_table_order()
+        # print(f"{list_product_before} the first len")
+        # self.home_page.click_cart_icon()
+        # self.checkout_page.click_cahekout_in_cart()
+        # self.home_page.click_cart_icon()
+        # self.checkout_page.click_cahekout_in_cart()
+        # self.checkout_page.click_next()
+        # self.checkout_page.click_radio_creditcard()
+        # self.checkout_page.pay_now_btn_MasterCredit_01()
+        # sleep(10)
+        # self.home_page.user_icon_after_log_in_TG()
+        # self.checkout_page.user_my_orders_bottun_TG()
+        # list_product_after = self.checkout_page.list_table_order()
+        # print(f"{list_product_after}the secound len")
+        # self.assertTrue(list_product_before > list_product_after)
+        # self.home_page.click_cart_icon()
+        # self.checkout_page.empty_cart_prove_txt()
+        # self.assertEqual(self.checkout_page.empty_cart_prove_len(), len(self.checkout_page.empty_cart_prove_txt()))
+
+    def test_10_check_logOut_login(self):
+        username = 'gold123'
+        password = 'Gold123'
+
+        # log in to acount
         self.home_page.click_user_logo()
-        self.home_page.input_user_name('gold123')
-        self.home_page.input_password('Gold123')
+        self.home_page.input_user_name(username)
+        self.home_page.input_password(password)
         self.home_page.click_sign_in()
+
+        # compare txt next to icon user to username
+        self.assertEqual(self.home_page.name_next_to_icon(), username)
         self.home_page.user_icon_after_log_in_TG()
         self.home_page.user_log_out_bottun_TG()
-        self.assertNotEqual(self.home_page.equal_name_after_log_out(), "")
+
+        # make sure there is no name next to acount icon after log out
+        self.assertNotEqual(self.home_page.name_next_to_icon(), "")
+
+
